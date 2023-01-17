@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
@@ -16,9 +17,11 @@ const Header = () => {
     <>
       <header className="py-4 bg-gray-100">
         <div className="container">
-          <div className="header-inner flex items-center">
+          <div className="header-inner flex justify-between items-center">
             <div className="site-logo">
-              <a href="/">Logo</a>
+              <a href="/" className="font-bold text-2xl">
+                eCare
+              </a>
             </div>
             <div className="navigation-part ml-auto">
               {/* Start Hamburger button */}
@@ -54,7 +57,7 @@ const Header = () => {
               <div
                 className={`${
                   navOpen ? "left-0" : "-left-full"
-                } navigation absolute top-0 w-4/5 h-full bg-gray-300 lg:bg-transparent lg:relative transition-all duration-300`}
+                } navigation absolute top-0 w-4/5 h-full bg-gray-300 lg:bg-transparent lg:static transition-all duration-300`}
               >
                 <div
                   onClick={handleCloseBtn}
@@ -78,17 +81,17 @@ const Header = () => {
                 </div>
                 <ul className="flex flex-col lg:flex-row lg:items-center space-y-6 lg:space-y-0 lg:space-x-8 px-8 lg:px-0 py-8 lg:py-0">
                   <li>
-                    <a href="/">Home</a>
+                    <NavLink to="/">Home</NavLink>
                   </li>
                   <li>
-                    <a href="/about">About</a>
+                    <NavLink to="/abput">About</NavLink>
                   </li>
                   <li>
-                    <a href="/contact">Contact</a>
+                    <NavLink to="/contact">Contact</NavLink>
                   </li>
                   <li>
-                    <a
-                      href="/login"
+                    <NavLink
+                      to="/login"
                       className="no-underline h-full flex margin_mobile lg:mr-0 items-center px-2 text-black transition ease-in-out duration-500 hover:text-orenge-100 hover:transition hover:ease-in-out hover:duration-500 user-menu font-Gotham font-semibold uppercase md:text-font14 xl:text-font15"
                     >
                       <svg
@@ -105,7 +108,7 @@ const Header = () => {
                         ></path>
                       </svg>
                       <span className="sr-only">My Account</span>
-                    </a>
+                    </NavLink>
                   </li>
                 </ul>
               </div>
