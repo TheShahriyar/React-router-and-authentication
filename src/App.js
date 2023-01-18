@@ -8,6 +8,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import NotFound from "./components/NotFount/NotFount";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/registration" element={<Registration />}></Route>
+        <Route path="/checkout" element={<Checkout />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
 
