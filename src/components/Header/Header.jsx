@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { NavLink } from "react-router-dom";
+import auth from "../../firebase.init";
 import "./Header.css";
 
 const Header = () => {
   const [navOpen, setNavOpen] = useState(false);
+  const [user] = useAuthState(auth);
+  const [signOut] = useSignOut(auth);
 
   const handleMobileNav = () => {
     setNavOpen(!navOpen);
@@ -81,34 +85,64 @@ const Header = () => {
                 </div>
                 <ul className="flex flex-col lg:flex-row lg:items-center space-y-6 lg:space-y-0 lg:space-x-8 px-8 lg:px-0 py-8 lg:py-0">
                   <li>
-                    <NavLink to="/">Home</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/abput">About</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/contact">Contact</NavLink>
+                    <NavLink
+                      to="/"
+                      className={({ isActive }) =>
+                        isActive ? "text-red-600 font-bold" : "font-bold"
+                      }
+                    >
+                      Home
+                    </NavLink>
                   </li>
                   <li>
                     <NavLink
-                      to="/login"
-                      className="no-underline h-full flex margin_mobile lg:mr-0 items-center px-2 text-black transition ease-in-out duration-500 hover:text-orenge-100 hover:transition hover:ease-in-out hover:duration-500 user-menu font-Gotham font-semibold uppercase md:text-font14 xl:text-font15"
+                      to="/abput"
+                      className={({ isActive }) =>
+                        isActive ? "text-red-600 font-bold" : "font-bold"
+                      }
                     >
-                      <svg
-                        className="transition ease-in-out duration-500 hover:transition hover:ease-in-out hover:duration-500"
-                        width="20"
-                        height="19"
-                        viewBox="0 0 20 19"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0.587891 18.1364C0.587891 18.6133 0.974165 19 1.45153 19C1.92889 19 2.31516 18.6133 2.31516 18.1364C2.31516 15.0888 4.06964 12.3907 6.8044 11.1148C7.75084 11.7298 8.87678 12.0909 10.087 12.0909C11.3019 12.0909 12.4322 11.7274 13.3808 11.108C14.1972 11.4934 14.9538 12.0119 15.5835 12.6412C17.0518 14.11 17.8606 16.0616 17.8606 18.1364C17.8606 18.6133 18.2469 19 18.7243 19C19.2016 19 19.5879 18.6133 19.5879 18.1364C19.5879 15.6003 18.5994 13.2152 16.8047 11.42C16.2041 10.8191 15.5062 10.3039 14.7573 9.87916C15.616 8.83509 16.1325 7.49957 16.1325 6.04545C16.1325 2.71194 13.4201 0 10.087 0C6.75395 0 4.04159 2.71194 4.04159 6.04545C4.04159 7.49604 4.55601 8.82829 5.41084 9.87125C2.44615 11.5404 0.587891 14.6592 0.587891 18.1364ZM10.087 1.72727C12.468 1.72727 14.4052 3.66455 14.4052 6.04545C14.4052 8.42636 12.468 10.3636 10.087 10.3636C7.70614 10.3636 5.76887 8.42636 5.76887 6.04545C5.76887 3.66455 7.70614 1.72727 10.087 1.72727Z"
-                          fill="currentColor"
-                        ></path>
-                      </svg>
-                      <span className="sr-only">My Account</span>
+                      About
                     </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/contact"
+                      className={({ isActive }) =>
+                        isActive ? "text-red-600 font-bold" : "font-bold"
+                      }
+                    >
+                      Contact
+                    </NavLink>
+                  </li>
+                  <li>
+                    {user?.uid ? (
+                      <NavLink
+                        onClick={async () => await signOut()}
+                        className="font-bold bg-sky-400 px-4 py-2 text-white rounded-lg"
+                      >
+                        Logout
+                      </NavLink>
+                    ) : (
+                      <NavLink
+                        to="/login"
+                        className="no-underline h-full flex margin_mobile lg:mr-0 items-center px-2 text-black transition ease-in-out duration-500 hover:text-orenge-100 hover:transition hover:ease-in-out hover:duration-500 user-menu font-Gotham font-semibold uppercase md:text-font14 xl:text-font15"
+                      >
+                        <svg
+                          className="transition ease-in-out duration-500 hover:transition hover:ease-in-out hover:duration-500"
+                          width="20"
+                          height="19"
+                          viewBox="0 0 20 19"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0.587891 18.1364C0.587891 18.6133 0.974165 19 1.45153 19C1.92889 19 2.31516 18.6133 2.31516 18.1364C2.31516 15.0888 4.06964 12.3907 6.8044 11.1148C7.75084 11.7298 8.87678 12.0909 10.087 12.0909C11.3019 12.0909 12.4322 11.7274 13.3808 11.108C14.1972 11.4934 14.9538 12.0119 15.5835 12.6412C17.0518 14.11 17.8606 16.0616 17.8606 18.1364C17.8606 18.6133 18.2469 19 18.7243 19C19.2016 19 19.5879 18.6133 19.5879 18.1364C19.5879 15.6003 18.5994 13.2152 16.8047 11.42C16.2041 10.8191 15.5062 10.3039 14.7573 9.87916C15.616 8.83509 16.1325 7.49957 16.1325 6.04545C16.1325 2.71194 13.4201 0 10.087 0C6.75395 0 4.04159 2.71194 4.04159 6.04545C4.04159 7.49604 4.55601 8.82829 5.41084 9.87125C2.44615 11.5404 0.587891 14.6592 0.587891 18.1364ZM10.087 1.72727C12.468 1.72727 14.4052 3.66455 14.4052 6.04545C14.4052 8.42636 12.468 10.3636 10.087 10.3636C7.70614 10.3636 5.76887 8.42636 5.76887 6.04545C5.76887 3.66455 7.70614 1.72727 10.087 1.72727Z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                        <span className="sr-only">My Account</span>
+                      </NavLink>
+                    )}
                   </li>
                 </ul>
               </div>
