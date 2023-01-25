@@ -1,9 +1,10 @@
 import React from "react";
 
 const componentName = () => {
+  const year = new Date().getFullYear();
   return (
     <div className="text-center bg-slate-400 py-4">
-      <h2>This is footer</h2>
+      <p>Copyright © {year}</p>
     </div>
   );
 };

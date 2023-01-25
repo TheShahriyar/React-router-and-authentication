@@ -1,17 +1,18 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import auth from "../firebase.init";
 
 const Checkout = () => {
   const param = useParams();
+  const navigate = useNavigate();
 
   const [user] = useAuthState(auth);
   console.log(user);
 
   const handleConfirmOrder = (e) => {
     e.preventDefault();
-    console.log("Order Confirmed");
+    navigate("/order-confirm");
   };
 
   return (

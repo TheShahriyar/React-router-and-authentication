@@ -11,7 +11,7 @@ import { useState } from "react";
 
 const Login = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, error] =
+  const [signInWithEmailAndPassword, error1] =
     useSignInWithEmailAndPassword(auth);
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -34,6 +35,9 @@ const Login = () => {
   };
   if (user) {
     navigate(from, { replace: true });
+  }
+  if (error1) {
+    setError(error1.message);
   }
 
   return (
@@ -70,7 +74,9 @@ const Login = () => {
               <button className="bg-sky-400 hover:bg-sky-500 transition-colors rounded-md px-10 py-4 text-lg text-white">
                 Login
               </button>
-              <div className="text-red-400 text-center mt-6">{error}</div>
+              <div className="text-red-400 text-center mt-6">
+                {error?.message}
+              </div>
             </form>
           </div>
           <div className="text-center mt-8">

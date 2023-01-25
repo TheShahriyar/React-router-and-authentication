@@ -11,6 +11,8 @@ import NotFound from "./components/NotFount/NotFount";
 import Checkout from "./pages/Checkout";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
+import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
+import Blog from "./pages/Blog";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         <Route path="/" element={<Homepage />}></Route>
         <Route path="/home" element={<Homepage />}></Route>
         <Route path="/about" element={<About />}></Route>
+        <Route path="/blog" element={<Blog />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/registration" element={<Registration />}></Route>
@@ -30,6 +33,14 @@ function App() {
           element={
             <RequireAuth>
               <Checkout />
+            </RequireAuth>
+          }
+        ></Route>
+        <Route
+          path="/order-confirm"
+          element={
+            <RequireAuth>
+              <OrderConfirm />
             </RequireAuth>
           }
         ></Route>
