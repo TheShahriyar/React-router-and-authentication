@@ -14,7 +14,6 @@ const Service = (props) => {
       </div>
       <NavLink
         to={"checkout/" + name}
-        service={props.service}
         className="bg-sky-400 hover:bg-sky-500 transition-colors px-8 py-3 text-white rounded"
       >
         Book Your Seat
