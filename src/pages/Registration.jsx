@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import GoogleIcon from "../images/google-icon.png";
 import {
+  useAuthState,
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
+  const [user] = useAuthState(auth);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [updateProfile] = useUpdateProfile(auth);
 
@@ -33,6 +37,10 @@ const Registration = () => {
   };
   const handleConfirmPass = (e) => {
     setConfirmPassword(e.target.value);
+  };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle();
   };
 
   const handleCreateNewUserForm = async (e) => {
@@ -60,8 +68,11 @@ const Registration = () => {
     await updateProfile({ displayName: name });
 
     setError("");
-    navigate("/");
   };
+
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
   return (
     <div className="min-h-screen">
@@ -72,7 +83,7 @@ const Registration = () => {
         <div className="login-wrapper w-2/5 mx-auto">
           <div className="text-center">
             <button
-              onClick={() => signInWithGoogle()}
+              onClick={handleGoogleSignIn}
               className="mx-auto flex items-center bg-gray-200 px-8 py-4 rounded-lg"
             >
               <span>Sign up with</span>

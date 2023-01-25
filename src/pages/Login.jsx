@@ -1,11 +1,39 @@
 import React from "react";
 import GoogleIcon from "../images/google-icon.png";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLoginUser = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(email, password);
+  };
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
   return (
     <div className="min-h-screen">
@@ -25,13 +53,15 @@ const Login = () => {
           </div>
           <div className="text-center font-bold text-xl my-10">Or</div>
           <div>
-            <form className="flex flex-col">
+            <form onSubmit={handleLoginUser} className="flex flex-col">
               <input
+                onBlur={handleEmail}
                 type="email"
                 placeholder="Your Email"
                 className="mb-8 bg-transparent border border-gray-400 px-6 py-3 focus:border-sky-400 focus:outline-0"
               />
               <input
+                onBlur={handlePassword}
                 type="password"
                 placeholder="Your Password"
                 className="mb-8 bg-transparent border border-gray-400 px-6 py-3 focus:border-sky-400 focus:outline-0"

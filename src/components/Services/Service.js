@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Service = (props) => {
   const { image, name, price, desc } = props.service;
+
   return (
     <div className="service text-center flex flex-col items-center shadow px-10 py-10">
       <img src={image} alt={name} className="w-20" />
@@ -12,7 +13,8 @@ const Service = (props) => {
         Fee: <span className="text-red-400">${price}</span>
       </div>
       <NavLink
-        to="/checkout"
+        to={"checkout/" + name}
+        service={props.service}
         className="bg-sky-400 hover:bg-sky-500 transition-colors px-8 py-3 text-white rounded"
       >
         Book Your Seat
