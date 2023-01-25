@@ -89,7 +89,7 @@ const Registration = () => {
         <h2 className="text-center text-2xl lg:text-3xl mb-10">
           Please Register!!
         </h2>
-        <div className="login-wrapper w-2/5 mx-auto">
+        <div className="login-wrapper lg:w-3/5 xl:w-2/5 mx-auto">
           <div className="text-center">
             <button
               onClick={handleGoogleSignIn}
@@ -106,12 +106,14 @@ const Registration = () => {
                 onBlur={handleName}
                 type="text"
                 placeholder="Your Name"
+                required
                 className="mb-8 bg-transparent border border-gray-400 px-6 py-3 focus:border-sky-400 focus:outline-0"
               />
               <input
                 onBlur={handleEmail}
                 type="email"
                 placeholder="Your Email"
+                required
                 className="mb-8 bg-transparent border border-gray-400 px-6 py-3 focus:border-sky-400 focus:outline-0"
               />
               <input

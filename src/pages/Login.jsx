@@ -11,7 +11,7 @@ import { useState } from "react";
 
 const Login = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, error1] =
+  const [signInWithEmailAndPassword, error] =
     useSignInWithEmailAndPassword(auth);
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
@@ -20,7 +20,6 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -32,10 +31,6 @@ const Login = () => {
   const handleLoginUser = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(email, password);
-
-    if (error1) {
-      setError("Email and Password didn't match");
-    }
   };
   if (user) {
     navigate(from, { replace: true });
@@ -47,7 +42,7 @@ const Login = () => {
         <h2 className="text-center text-2xl lg:text-3xl mb-10">
           Please Login!!
         </h2>
-        <div className="login-wrapper w-2/5 mx-auto">
+        <div className="login-wrapper lg:w-3/5 xl:w-2/5 mx-auto">
           <div className="text-center">
             <button
               onClick={() => signInWithGoogle()}
@@ -75,7 +70,7 @@ const Login = () => {
               <button className="bg-sky-400 hover:bg-sky-500 transition-colors rounded-md px-10 py-4 text-lg text-white">
                 Login
               </button>
-              <div className="text-red-400 text-center mt-6">{error1}</div>
+              <div className="text-red-400 text-center mt-6">{error}</div>
             </form>
           </div>
           <div className="text-center mt-8">

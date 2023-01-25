@@ -3,9 +3,9 @@ import DoctorImage from "../../images/img1.png";
 
 const Appointment = () => {
   return (
-    <div className="pt-16 bg-gray-100">
+    <div className="pt-16 bg-gray-100 pb-16 lg:pb-0">
       <div className="container">
-        <div className="grid grid-cols-2 gap-x-10 items-center">
+        <div className="grid xl:grid-cols-2 gap-x-10 items-center">
           <div className="">
             <div className="appointment-wrapper">
               <h2 className="text-2xl lg:text-3xl mb-2">Book an appointment</h2>
@@ -48,7 +48,7 @@ const Appointment = () => {
               </button>
             </div>
           </div>
-          <div className=" text-center">
+          <div className=" text-center hidden lg:block">
             <img
               src={DoctorImage}
               alt="Doctor Name"
