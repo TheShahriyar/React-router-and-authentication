@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
 import GoogleIcon from "../images/google-icon.png";
 import {
   useAuthState,
@@ -8,11 +9,14 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const Registration = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(
+    auth,
+    { sendEmailVerification: true }
+  );
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,6 +26,7 @@ const Registration = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -31,6 +36,9 @@ const Registration = () => {
   };
   const handleEmail = (e) => {
     setEmail(e.target.value);
+  };
+  const handlePhone = (e) => {
+    setPhone(e.target.value);
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
@@ -65,9 +73,10 @@ const Registration = () => {
       return;
     }
     await createUserWithEmailAndPassword(email, password);
-    await updateProfile({ displayName: name });
+    await updateProfile({ displayName: name, phoneNumber: phone });
 
     setError("");
+    toast("Verification Email Sent");
   };
 
   if (user) {
@@ -106,6 +115,12 @@ const Registration = () => {
                 className="mb-8 bg-transparent border border-gray-400 px-6 py-3 focus:border-sky-400 focus:outline-0"
               />
               <input
+                onBlur={handlePhone}
+                type="text"
+                placeholder="Your Phone"
+                className="mb-8 bg-transparent border border-gray-400 px-6 py-3 focus:border-sky-400 focus:outline-0"
+              />
+              <input
                 onBlur={handlePassword}
                 type="password"
                 placeholder="Your Password"
@@ -134,6 +149,7 @@ const Registration = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

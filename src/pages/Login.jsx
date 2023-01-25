@@ -11,7 +11,8 @@ import { useState } from "react";
 
 const Login = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, error1] =
+    useSignInWithEmailAndPassword(auth);
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,6 +20,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -30,6 +32,10 @@ const Login = () => {
   const handleLoginUser = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(email, password);
+
+    if (error1) {
+      setError("Email and Password didn't match");
+    }
   };
   if (user) {
     navigate(from, { replace: true });
@@ -69,7 +75,17 @@ const Login = () => {
               <button className="bg-sky-400 hover:bg-sky-500 transition-colors rounded-md px-10 py-4 text-lg text-white">
                 Login
               </button>
+              <div className="text-red-400 text-center mt-6">{error1}</div>
             </form>
+          </div>
+          <div className="text-center mt-8">
+            <span>Forgot your Password?</span>
+            <NavLink
+              to="/reset-password"
+              className="font-semibold underline ml-2 text-red-500"
+            >
+              Reset Password
+            </NavLink>
           </div>
           <div className="text-center mt-8">
             <span>Don't have an account?</span>

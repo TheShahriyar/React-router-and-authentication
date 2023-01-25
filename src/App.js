@@ -10,6 +10,7 @@ import Registration from "./pages/Registration";
 import NotFound from "./components/NotFount/NotFount";
 import Checkout from "./pages/Checkout";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/registration" element={<Registration />}></Route>
+        <Route path="/reset-password" element={<ResetPassword />}></Route>
         <Route
           path="/checkout/:serviceID"
           element={

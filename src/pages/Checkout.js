@@ -9,19 +9,20 @@ const Checkout = () => {
   const [user] = useAuthState(auth);
   console.log(user);
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = (e) => {
+    e.preventDefault();
     console.log("Order Confirmed");
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="container py-20">
         <div className="text-center text-2xl lg:text-3xl mb-10">
           <h2>Order Service: {param.serviceID}</h2>
         </div>
         <div className="lg:w-3/5 xl:w-2/5 mx-auto">
           <h3 className="mb-6">Fill out below information to confirm order:</h3>
-          <form className="flex flex-col">
+          <form onClick={handleConfirmOrder} className="flex flex-col">
             <input
               type="text"
               placeholder="Your Name"
